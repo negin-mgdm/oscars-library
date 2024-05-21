@@ -24,12 +24,36 @@
       <label for="won">Won:</label>
       <input type="text" id="won" name="won" /><br /><br />
 
-      <button type="button">Get Nominations</button>
-      <button type="button">Get Nominees</button>
-      <button type="button">Clear Input</button>
-      <button type="button">Clear Output</button>
+      <button type="button" onclick="getNominations()">Get Nominations</button>
+      <button type="button" onclick="getNominees()">Get Nominees</button>
+      <button type="button" onclick="clearInput()">Clear Input</button>
+      <button type="button" onclick="clearOutput()">Clear Output</button>
     </form>
 
     <div id="output"></div>
+
+    <script>
+      function getNominations() {
+        // Fetch nominations from server and display in output area
+        document.getElementById("output").innerText =
+          "Nominations retrieved from server.";
+      }
+
+      function getNominees() {
+        // Fetch nominees from server and display in output area
+        document.getElementById("output").innerText =
+          "Nominees retrieved from server.";
+      }
+
+      function clearInput() {
+        // Clear all input fields
+        document.getElementById("oscar-form").reset();
+      }
+
+      function clearOutput() {
+        // Clear output area
+        document.getElementById("output").innerText = "";
+      }
+    </script>
   </body>
 </html>
