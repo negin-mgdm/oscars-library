@@ -96,8 +96,7 @@
             });
             const header =
               "<tbody><tr><th>Year</th><th>Category</th><th>Nominee</th><th>Info</th><th>Won?</th></tr></tbody>";
-            nomineeDiv.innerHTML =
-              "<table>" + header + "<tbody>" + nominations + "</table></tbody>";
+            nomineeDiv.innerHTML = `<table>${header}<tbody>${nominations}</table></tbody>`;
             nominationsDiv.appendChild(nomineeDiv);
           })
           .catch((error) =>
