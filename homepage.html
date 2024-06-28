@@ -75,6 +75,27 @@
     </div>
 
     <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("oscars.json")
+          .then((response) => response.json())
+          .then((data) => {
+            const nominationsDiv = document.getElementById("output");
+            data.forEach((nominee) => {
+              const nomineeDiv = document.createElement("div");
+              nomineeDiv.innerHTML = `
+                <p><strong>Year:</strong> ${nominee.Year}</p>
+                <p><strong>Category:</strong> ${nominee.Category}</p>
+                <p><strong>Nominee:</strong> ${nominee.Nominee}</p>
+                <p><strong>Info:</strong> ${nominee.Info}</p>
+                <p><strong>Won:</strong> ${nominee.Won}</p>
+              `;
+              nominationsDiv.appendChild(nomineeDiv);
+            });
+          })
+          .catch((error) =>
+            console.error("Error fetching the JSON file:", error)
+          );
+      });
       function getNominations() {
         // Fetch nominations from server and display in output area
         document.getElementById("output").innerText =
