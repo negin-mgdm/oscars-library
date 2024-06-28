@@ -45,11 +45,7 @@
           <input type="text" id="won" name="won" class="form-control" />
         </div>
 
-        <button
-          type="button"
-          onclick="getNominations()"
-          class="btn btn-danger mr-2"
-        >
+        <button type="button" id="getNominations" class="btn btn-danger mr-2">
           Get Nominations
         </button>
         <button
@@ -75,7 +71,12 @@
     </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
+      document
+        .getElementById("getNominations")
+        .addEventListener("click", getNominations);
+
+      function getNominations() {
+        // Fetch nominations from server and display in output area
         fetch("oscars.json")
           .then((response) => response.json())
           .then((data) => {
@@ -84,14 +85,14 @@
             let nominations = "";
             data.forEach((nominee) => {
               let nomination = `
-              <tr>
-                <td>${nominee.Year}</td>
-                <td>${nominee.Category}</td>
-                <td>${nominee.Nominee}</td>
-                <td>${nominee.Info}</td>
-                <td>${nominee.Won}</td>
-                </tr>
-                `;
+            <tr>
+              <td>${nominee.Year}</td>
+              <td>${nominee.Category}</td>
+              <td>${nominee.Nominee}</td>
+              <td>${nominee.Info}</td>
+              <td>${nominee.Won}</td>
+              </tr>
+              `;
               nominations += nomination;
             });
             const header =
@@ -102,11 +103,6 @@
           .catch((error) =>
             console.error("Error fetching the JSON file:", error)
           );
-      });
-      function getNominations() {
-        // Fetch nominations from server and display in output area
-        document.getElementById("output").innerText =
-          "Nominations retrieved from server.";
       }
 
       function getNominees() {
