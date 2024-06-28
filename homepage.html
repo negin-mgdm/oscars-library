@@ -71,56 +71,7 @@
         </button>
       </form>
 
-      <div id="output" class="mt-4">
-        <table>
-          <tbody>
-            <tr>
-              <th>Year</th>
-              <th>Category</th>
-              <th>Nominee</th>
-              <th>Info</th>
-              <th>Won?</th>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr>
-              <td>2010 (83rd)</td>
-              <td>Actor -- Leading Role</td>
-              <td>Javier Bardem</td>
-              <td>Biutiful {'Uxbal'}</td>
-              <td>no</td>
-            </tr>
-            <tr>
-              <td>2010 (83rd)</td>
-              <td>Actor -- Leading Role</td>
-              <td>Jeff Bridges</td>
-              <td>True Grit {'Rooster Cogburn'}</td>
-              <td>no</td>
-            </tr>
-            <tr>
-              <td>2010 (83rd)</td>
-              <td>Actor -- Leading Role</td>
-              <td>Jesse Eisenberg</td>
-              <td>The Social Network {'Mark Zuckerberg'}</td>
-              <td>no</td>
-            </tr>
-            <tr>
-              <td>2010 (83rd)</td>
-              <td>Actor -- Leading Role</td>
-              <td>Colin Firth</td>
-              <td>The King's Speech {'King George VI'}</td>
-              <td>yes</td>
-            </tr>
-            <tr>
-              <td>2010 (83rd)</td>
-              <td>Actor -- Leading Role</td>
-              <td>James Franco</td>
-              <td>127 Hours {'Aron Ralston'}</td>
-              <td>no</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <div id="output" class="mt-4"></div>
     </div>
 
     <script>
@@ -129,17 +80,25 @@
           .then((response) => response.json())
           .then((data) => {
             const nominationsDiv = document.getElementById("output");
+            const nomineeDiv = document.createElement("div");
+            let nominations = "";
             data.forEach((nominee) => {
-              const nomineeDiv = document.createElement("div");
-              nomineeDiv.innerHTML = `
-                <p><strong>Year:</strong> ${nominee.Year}</p>
-                <p><strong>Category:</strong> ${nominee.Category}</p>
-                <p><strong>Nominee:</strong> ${nominee.Nominee}</p>
-                <p><strong>Info:</strong> ${nominee.Info}</p>
-                <p><strong>Won:</strong> ${nominee.Won}</p>
-              `;
-              nominationsDiv.appendChild(nomineeDiv);
+              let nomination = `
+              <tr>
+                <td>${nominee.Year}</td>
+                <td>${nominee.Category}</td>
+                <td>${nominee.Nominee}</td>
+                <td>${nominee.Info}</td>
+                <td>${nominee.Won}</td>
+                </tr>
+                `;
+              nominations += nomination;
             });
+            const header =
+              "<tbody><tr><th>Year</th><th>Category</th><th>Nominee</th><th>Info</th><th>Won?</th></tr></tbody>";
+            nomineeDiv.innerHTML =
+              "<table>" + header + "<tbody>" + nominations + "</table></tbody>";
+            nominationsDiv.appendChild(nomineeDiv);
           })
           .catch((error) =>
             console.error("Error fetching the JSON file:", error)
