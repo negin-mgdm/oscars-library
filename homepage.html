@@ -54,7 +54,7 @@
         </button>
         <button
           type="button"
-          onclick="getNominees()"
+          id="getNominees"
           class="btn btn-outline-info mr-2"
         >
           Get Nominees
@@ -85,38 +85,54 @@
 
       function getNominations() {
         // Fetch nominations from server and display in output area
+        clearOutput();
         fetch("oscars.json")
           .then((response) => response.json())
           .then((data) => {
-            const nominationsDiv = document.getElementById("output");
-            const nomineeDiv = document.createElement("div");
             let nominations = "";
             data.forEach((nominee) => {
               let nomination = `
-            <tr>
-              <td>${nominee.Year}</td>
-              <td>${nominee.Category}</td>
-              <td>${nominee.Nominee}</td>
-              <td>${nominee.Info}</td>
-              <td>${nominee.Won}</td>
-              </tr>
-              `;
+              <tr>
+                <td>${nominee.Year}</td>
+                <td>${nominee.Category}</td>
+                <td>${nominee.Nominee}</td>
+                <td>${nominee.Info}</td>
+                <td>${nominee.Won}</td>
+                </tr>
+                `;
               nominations += nomination;
             });
             const header =
               '<thead class="thead-dark"><tr><th>Year</th><th>Category</th><th>Nominee</th><th>Info</th><th>Won?</th></tr></thead>';
-            nomineeDiv.innerHTML = `<table class="table table-striped">${header}<tbody>${nominations}</tbody></table>`;
-            nominationsDiv.appendChild(nomineeDiv);
+            let table = `<table class="table table-striped">${header}<tbody>${nominations}</tbody></table>`;
+
+            const nomineeDiv = document.createElement("div");
+            nomineeDiv.innerHTML = table;
+
+            const outputDiv = document.getElementById("output");
+            outputDiv.appendChild(nomineeDiv);
           })
           .catch((error) =>
             console.error("Error fetching the JSON file:", error)
           );
       }
 
+      document
+        .getElementById("getNominees")
+        .addEventListener("click", getNominees);
+
       function getNominees() {
         // Fetch nominees from server and display in output area
-        document.getElementById("output").innerText =
-          "Nominees retrieved from server.";
+        clearOutput();
+        const header =
+          '<thead class="thead-dark"><tr><th>Nominee</th><th>Number of times</th></tr></thead>';
+        let table = `<table class="table table-striped">${header}</table>`;
+
+        const nomineeDiv = document.createElement("div");
+        nomineeDiv.innerHTML = table;
+
+        const outputDiv = document.getElementById("output");
+        outputDiv.appendChild(nomineeDiv);
       }
 
       function clearInput() {
