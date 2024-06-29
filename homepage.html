@@ -124,15 +124,63 @@
       function getNominees() {
         // Fetch nominees from server and display in output area
         clearOutput();
-        const header =
-          '<thead class="thead-dark"><tr><th>Nominee</th><th>Number of times</th></tr></thead>';
-        let table = `<table class="table table-striped">${header}</table>`;
+        fetch("oscars.json")
+          .then((response) => response.json())
+          .then((data) => {
+            let nominees = "";
+            let result = buildObject(data);
+            result.forEach((x) => {
+              let y = `
+            <tr>
+              <td>${x.key}</td>
+              <td>${x.value}</td>
+            </tr>
+            `;
+              nominees += y;
+            });
 
-        const nomineeDiv = document.createElement("div");
-        nomineeDiv.innerHTML = table;
+            const header =
+              '<thead class="thead-dark"><tr><th>Nominee</th><th>Number of times</th></tr></thead>';
+            let table = `<table class="table table-striped">${header}<tbody>${nominees}</tbody></table>`;
 
-        const outputDiv = document.getElementById("output");
-        outputDiv.appendChild(nomineeDiv);
+            const nomineeDiv = document.createElement("div");
+            nomineeDiv.innerHTML = table;
+
+            const outputDiv = document.getElementById("output");
+            outputDiv.appendChild(nomineeDiv);
+          })
+          .catch((error) =>
+            console.error("Error fetching the JSON file:", error)
+          );
+      }
+
+      function buildObject(data) {
+        let filteredData = data.filter((nomination) => {
+          if (
+            nomination.Category.includes("Actress") ||
+            nomination.Category.includes("Actor")
+          ) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+
+        let nomineeCount = {};
+        for (let nominee of filteredData) {
+          if (nominee.Nominee in nomineeCount) {
+            nomineeCount[nominee.Nominee] += 1;
+          } else {
+            nomineeCount[nominee.Nominee] = 1;
+          }
+        }
+        const keyValuePairs = Object.entries(nomineeCount).map(
+          ([key, value]) => ({
+            key,
+            value,
+          })
+        );
+        return keyValuePairs;
       }
 
       function clearInput() {
