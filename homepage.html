@@ -174,12 +174,10 @@
             nomineeCount[nominee.Nominee] = 1;
           }
         }
-        const keyValuePairs = Object.entries(nomineeCount).map(
-          ([key, value]) => ({
-            key,
-            value,
-          })
-        );
+        const keyValuePairs = Object.entries(nomineeCount)
+          .map(([key, value]) => ({ key, value }))
+          .sort((a, b) => b.value - a.value);
+
         return keyValuePairs;
       }
 
