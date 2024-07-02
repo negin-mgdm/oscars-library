@@ -131,31 +131,35 @@
         fetch("oscars.json")
           .then((response) => response.json())
           .then((data) => {
-            let nominees = "";
             let result = buildObject(data);
-            result.forEach((x) => {
-              let y = `
-            <tr>
-              <td>${x.key}</td>
-              <td>${x.value}</td>
-            </tr>
-            `;
-              nominees += y;
-            });
-
-            const header =
-              '<thead class="thead-dark"><tr><th>Nominee</th><th>Number of times</th></tr></thead>';
-            let table = `<table class="table table-striped">${header}<tbody>${nominees}</tbody></table>`;
-
-            const nomineeDiv = document.createElement("div");
-            nomineeDiv.innerHTML = table;
-
-            const outputDiv = document.getElementById("output");
-            outputDiv.appendChild(nomineeDiv);
+            addNomineeTable(result);
           })
           .catch((error) =>
             console.error("Error fetching the JSON file:", error)
           );
+      }
+
+      function addNomineeTable(result) {
+        let nominees = "";
+        result.forEach((x) => {
+          let y = `
+        <tr>
+          <td>${x.key}</td>
+          <td>${x.value}</td>
+        </tr>
+        `;
+          nominees += y;
+        });
+
+        const header =
+          '<thead class="thead-dark"><tr><th>Nominee</th><th>Number of times</th></tr></thead>';
+        let table = `<table class="table table-striped">${header}<tbody>${nominees}</tbody></table>`;
+
+        const nomineeDiv = document.createElement("div");
+        nomineeDiv.innerHTML = table;
+
+        const outputDiv = document.getElementById("output");
+        outputDiv.appendChild(nomineeDiv);
       }
 
       function buildObject(data) {
