@@ -93,7 +93,8 @@
         // Fetch nominations from server and display in output area
         clearOutput();
         const data = await fetchOscarsData();
-        addTable(data);
+        const filteredYear = filterByYear(data);
+        addTable(filteredYear);
       }
 
       function addTable(data) {
@@ -181,6 +182,18 @@
           .sort((a, b) => b.value - a.value);
 
         return keyValuePairs;
+      }
+
+      function filterByYear(data) {
+        let inputYear = document.getElementById("year");
+        let filteredData = data.filter((nomination) => {
+          if (nomination.Year.includes(inputYear.value)) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        return filteredData;
       }
 
       function clearInput() {
