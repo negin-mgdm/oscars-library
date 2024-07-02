@@ -125,18 +125,12 @@
         .getElementById("getNominees")
         .addEventListener("click", getNominees);
 
-      function getNominees() {
+      async function getNominees() {
         // Fetch nominees from server and display in output area
         clearOutput();
-        fetch("oscars.json")
-          .then((response) => response.json())
-          .then((data) => {
-            let result = buildObject(data);
-            addNomineeTable(result);
-          })
-          .catch((error) =>
-            console.error("Error fetching the JSON file:", error)
-          );
+        const data = await fetchOscarsData();
+        let result = buildObject(data);
+        addNomineeTable(result);
       }
 
       function addNomineeTable(result) {
