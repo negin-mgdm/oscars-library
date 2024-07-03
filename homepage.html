@@ -184,17 +184,17 @@
         return keyValuePairs;
       }
 
+      function getInputValue(id) {
+        return document.getElementById(id).value;
+      }
+
       function filterByInputs(data) {
-        let inputYear = document.getElementById("year");
-        let inputNominee = document.getElementById("nominee");
-        let inputCategory = document.getElementById("category");
-        let inputInfo = document.getElementById("info");
         let filteredData = data.filter((nomination) => {
           if (
-            nomination.Year.includes(inputYear.value) &&
-            nomination.Nominee.includes(inputNominee.value) &&
-            nomination.Category.includes(inputCategory.value) &&
-            nomination.Info.includes(inputInfo.value)
+            nomination.Year.includes(getInputValue("year")) &&
+            nomination.Nominee.includes(getInputValue("nominee")) &&
+            nomination.Category.includes(getInputValue("category")) &&
+            nomination.Info.includes(getInputValue("ingo"))
           ) {
             return true;
           } else {
