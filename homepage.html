@@ -94,7 +94,8 @@
         clearOutput();
         const data = await fetchOscarsData();
         const filteredYear = filterByYear(data);
-        addTable(filteredYear);
+        const filteredNominee = filterByNominee(data);
+        addTable(filteredNominee);
       }
 
       function addTable(data) {
@@ -188,6 +189,18 @@
         let inputYear = document.getElementById("year");
         let filteredData = data.filter((nomination) => {
           if (nomination.Year.includes(inputYear.value)) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        return filteredData;
+      }
+
+      function filterByNominee(data) {
+        let inputNominee = document.getElementById("nominee");
+        let filteredData = data.filter((nomination) => {
+          if (nomination.Nominee.includes(inputNominee.value)) {
             return true;
           } else {
             return false;
