@@ -93,9 +93,8 @@
         // Fetch nominations from server and display in output area
         clearOutput();
         const data = await fetchOscarsData();
-        const filteredYear = filterByYear(data);
-        const filteredNominee = filterByNominee(data);
-        addTable(filteredNominee);
+        const filteredData = filterByInputs(data);
+        addTable(filteredData);
       }
 
       function addTable(data) {
@@ -185,22 +184,18 @@
         return keyValuePairs;
       }
 
-      function filterByYear(data) {
+      function filterByInputs(data) {
         let inputYear = document.getElementById("year");
-        let filteredData = data.filter((nomination) => {
-          if (nomination.Year.includes(inputYear.value)) {
-            return true;
-          } else {
-            return false;
-          }
-        });
-        return filteredData;
-      }
-
-      function filterByNominee(data) {
         let inputNominee = document.getElementById("nominee");
+        let inputCategory = document.getElementById("category");
+        let inputInfo = document.getElementById("info");
         let filteredData = data.filter((nomination) => {
-          if (nomination.Nominee.includes(inputNominee.value)) {
+          if (
+            nomination.Year.includes(inputYear.value) &&
+            nomination.Nominee.includes(inputNominee.value) &&
+            nomination.Category.includes(inputCategory.value) &&
+            nomination.Info.includes(inputInfo.value)
+          ) {
             return true;
           } else {
             return false;
