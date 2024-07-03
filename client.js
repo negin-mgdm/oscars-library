@@ -104,16 +104,16 @@ function buildObject(data) {
 }
 
 function getInputValue(id) {
-    return document.getElementById(id).value;
+    return document.getElementById(id).value.toLowerCase();
 }
 
 function filterByInputs(data) {
     let filteredData = data.filter((nomination) => {
         if (
-            nomination.Year.includes(getInputValue("year")) &&
-            nomination.Nominee.includes(getInputValue("nominee")) &&
-            nomination.Category.includes(getInputValue("category")) &&
-            nomination.Info.includes(getInputValue("info"))
+            nomination.Year.toLowerCase().includes(getInputValue("year")) &&
+            nomination.Nominee.toLowerCase().includes(getInputValue("nominee")) &&
+            nomination.Category.toLowerCase().includes(getInputValue("category")) &&
+            nomination.Info.toLowerCase().includes(getInputValue("info"))
         ) {
             return true;
         } else {
