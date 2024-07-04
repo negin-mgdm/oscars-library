@@ -50,7 +50,8 @@ async function getNominees() {
     // Fetch nominees from server and display in output area
     clearOutput();
     const data = await fetchOscarsData();
-    let result = buildObject(data);
+    const filterByWon = filterByWonInput(data);
+    let result = buildObject(filterByWon);
     addNomineeTable(result);
 }
 
