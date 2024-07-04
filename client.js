@@ -50,10 +50,10 @@ async function getNominees() {
     // Fetch nominees from server and display in output area
     clearOutput();
     const data = await fetchOscarsData();
-    const filterByWon = filterByWonInput(data);
-    let result = buildObject(filterByWon);
+    let result = countNominationsForNominees(data);
     addNomineeTable(result);
 }
+
 
 function addNomineeTable(result) {
     let nominees = "";
@@ -78,8 +78,9 @@ function addNomineeTable(result) {
     outputDiv.appendChild(nomineeDiv);
 }
 
-function buildObject(data) {
-    let filteredData = data.filter((nomination) => {
+function countNominationsForNominees(data) {
+    const filterByWon = filterByWonInput(data);
+    let filteredData = filterByWon.filter((nomination) => {
         if (
             nomination.Category.includes("Actress") ||
             nomination.Category.includes("Actor")
