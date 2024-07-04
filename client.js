@@ -1,6 +1,14 @@
-document
-    .getElementById("getNominations")
-    .addEventListener("click", getNominations);
+main();
+
+function main() {
+    document
+        .getElementById("getNominations")
+        .addEventListener("click", getNominations);
+
+    document
+        .getElementById("getNominees")
+        .addEventListener("click", getNominees);
+}
 
 async function fetchOscarsData() {
     const response = await fetch("oscars.json");
@@ -41,10 +49,6 @@ function addTable(data) {
     outputDiv.appendChild(nomineeDiv);
 }
 
-document
-    .getElementById("getNominees")
-    .addEventListener("click", getNominees);
-
 async function getNominees() {
     // Fetch nominees from server and display in output area
     clearOutput();
@@ -52,7 +56,6 @@ async function getNominees() {
     let result = countNominationsForNominees(data);
     addNomineeTable(result);
 }
-
 
 function addNomineeTable(result) {
     let nominees = "";
@@ -138,8 +141,6 @@ function filterByWonInput(data) {
         return data;
     }
 }
-
-
 
 function clearInput() {
     // Clear all input fields
