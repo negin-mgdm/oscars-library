@@ -13,7 +13,8 @@ async function getNominations() {
     clearOutput();
     const data = await fetchOscarsData();
     const filteredData = filterByInputs(data);
-    addTable(filteredData);
+    const filterDataByWon = filterByWonInput(filteredData)
+    addTable(filterDataByWon);
 }
 
 function addTable(data) {
@@ -109,11 +110,12 @@ function getInputValue(id) {
 
 function filterByInputs(data) {
     let filteredData = data.filter((nomination) => {
+        const info = typeof nomination.Info === 'string' ? nomination.Info.toLowerCase() : '';
         if (
             nomination.Year.toLowerCase().includes(getInputValue("year")) &&
             nomination.Nominee.toLowerCase().includes(getInputValue("nominee")) &&
             nomination.Category.toLowerCase().includes(getInputValue("category")) &&
-            nomination.Info.toLowerCase().includes(getInputValue("info"))
+            info.includes(getInputValue("info"))
         ) {
             return true;
         } else {
@@ -122,6 +124,20 @@ function filterByInputs(data) {
     });
     return filteredData;
 }
+
+function filterByWonInput(data) {
+    const won = getInputValue("won");
+    if (won == "yes" || won == "no") {
+        let filteredNominations = data.filter((nomination) => {
+            return nomination.Won.includes(won);
+        })
+        return filteredNominations;
+    } else {
+        return data;
+    }
+}
+
+
 
 function clearInput() {
     // Clear all input fields
