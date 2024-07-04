@@ -1,3 +1,4 @@
+// Group A
 main();
 
 function main() {
@@ -10,21 +11,16 @@ function main() {
         .addEventListener("click", getNominees);
 }
 
-async function fetchOscarsData() {
-    const response = await fetch("oscars.json");
-    const data = await response.json();
-    return data;
-}
-
+// Group B
 async function getNominations() {
     // Fetch nominations from server and display in output area
     clearOutput();
     const data = await fetchOscarsData();
     const filteredData = filterByInputs(data);
-    addTable(filteredData);
+    addNominationsTable(filteredData);
 }
 
-function addTable(data) {
+function addNominationsTable(data) {
     let nominations = "";
     data.forEach((nominee) => {
         let nomination = `
@@ -49,6 +45,25 @@ function addTable(data) {
     outputDiv.appendChild(nomineeDiv);
 }
 
+function filterByInputs(data) {
+    const filterDataByWon = filterByWonInput(data);
+    let filteredData = filterDataByWon.filter((nomination) => {
+        const info = typeof nomination.Info === 'string' ? nomination.Info.toLowerCase() : '';
+        if (
+            nomination.Year.toLowerCase().includes(getInputValue("year")) &&
+            nomination.Nominee.toLowerCase().includes(getInputValue("nominee")) &&
+            nomination.Category.toLowerCase().includes(getInputValue("category")) &&
+            info.includes(getInputValue("info"))
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+    return filteredData;
+}
+
+// Group C
 async function getNominees() {
     // Fetch nominees from server and display in output area
     clearOutput();
@@ -108,26 +123,15 @@ function countNominationsForNominees(data) {
     return keyValuePairs;
 }
 
-function getInputValue(id) {
-    return document.getElementById(id).value.toLowerCase();
+// Group D
+async function fetchOscarsData() {
+    const response = await fetch("oscars.json");
+    const data = await response.json();
+    return data;
 }
 
-function filterByInputs(data) {
-    const filterDataByWon = filterByWonInput(data);
-    let filteredData = filterDataByWon.filter((nomination) => {
-        const info = typeof nomination.Info === 'string' ? nomination.Info.toLowerCase() : '';
-        if (
-            nomination.Year.toLowerCase().includes(getInputValue("year")) &&
-            nomination.Nominee.toLowerCase().includes(getInputValue("nominee")) &&
-            nomination.Category.toLowerCase().includes(getInputValue("category")) &&
-            info.includes(getInputValue("info"))
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    });
-    return filteredData;
+function getInputValue(id) {
+    return document.getElementById(id).value.toLowerCase();
 }
 
 function filterByWonInput(data) {
