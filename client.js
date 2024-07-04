@@ -13,8 +13,7 @@ async function getNominations() {
     clearOutput();
     const data = await fetchOscarsData();
     const filteredData = filterByInputs(data);
-    const filterDataByWon = filterByWonInput(filteredData)
-    addTable(filterDataByWon);
+    addTable(filteredData);
 }
 
 function addTable(data) {
@@ -111,7 +110,8 @@ function getInputValue(id) {
 }
 
 function filterByInputs(data) {
-    let filteredData = data.filter((nomination) => {
+    const filterDataByWon = filterByWonInput(data);
+    let filteredData = filterDataByWon.filter((nomination) => {
         const info = typeof nomination.Info === 'string' ? nomination.Info.toLowerCase() : '';
         if (
             nomination.Year.toLowerCase().includes(getInputValue("year")) &&
