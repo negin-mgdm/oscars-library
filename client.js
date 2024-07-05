@@ -74,6 +74,11 @@ async function getNominees() {
     clearOutput();
     const data = await fetchOscarsData();
     let result = countNominationsForNominees(data);
+    displayingNomineesResults(result);
+}
+
+function displayingNomineesResults(result) {
+    showTotalResults(result);
     addNomineeTable(result);
 }
 
