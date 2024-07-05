@@ -17,6 +17,11 @@ async function getNominations() {
     clearOutput();
     const data = await fetchOscarsData();
     const filteredData = filterByInputs(data);
+    displayingNominationsResults(filteredData);
+}
+
+function displayingNominationsResults(filteredData) {
+    showTotalResults(filteredData);
     addNominationsTable(filteredData);
 }
 
@@ -154,4 +159,18 @@ function clearInput() {
 function clearOutput() {
     // Clear output area
     document.getElementById("output").innerText = "";
+}
+
+function getResultsCount(tableData) {
+    return tableData.length;
+}
+
+function showTotalResults(filteredData) {
+    const count = getResultsCount(filteredData);
+
+    const resultsElement = document.createElement("p");
+    resultsElement.innerHTML = count;
+
+    const outputDiv = document.getElementById("output");
+    outputDiv.appendChild(resultsElement);
 }
