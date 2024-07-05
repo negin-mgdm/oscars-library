@@ -174,7 +174,8 @@ function showTotalResults(filteredData) {
     const count = getResultsCount(filteredData);
 
     const resultsElement = document.createElement("p");
-    resultsElement.innerHTML = count;
+    resultsElement.innerHTML = "Total Results: " + count;
+    resultsElement.className = "h5";
 
     const outputDiv = document.getElementById("output");
     outputDiv.appendChild(resultsElement);
