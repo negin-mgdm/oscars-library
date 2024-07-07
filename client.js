@@ -50,22 +50,14 @@ function addNominationsTable(data) {
     outputDiv.appendChild(nomineeDiv);
 }
 
-function filterByInputs(data) {
-    const filterDataByWon = filterByWonInput(data);
-    let filteredData = filterDataByWon.filter((nomination) => {
-        const info = typeof nomination.Info === 'string' ? nomination.Info.toLowerCase() : '';
-        if (
-            nomination.Year.toLowerCase().includes(getInputValue("year")) &&
-            nomination.Nominee.toLowerCase().includes(getInputValue("nominee")) &&
-            nomination.Category.toLowerCase().includes(getInputValue("category")) &&
-            info.includes(getInputValue("info"))
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    });
-    return filteredData;
+async function filterByInputs() {
+    const year = getInputValue("year");
+    const nominee = getInputValue("nominee");
+    const category = getInputValue("category");
+    const info = getInputValue("info");
+    const queryParameters = `year=${year}&nominee=${nominee}&category=${category}&info=${info}`;
+    const response = await fetch(`http://localhost:8080/getNominations?${queryParameters}`);
+    return response;
 }
 
 // Group C
