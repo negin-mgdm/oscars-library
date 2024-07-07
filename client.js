@@ -130,7 +130,21 @@ function countNominationsForNominees(data) {
         .map(([key, value]) => ({ key, value }))
         .sort((a, b) => b.value - a.value);
 
-    return keyValuePairs;
+    const filterByNominationsCountInput = filterNomineeNominationsCountByValue(keyValuePairs);
+
+    return filterByNominationsCountInput;
+}
+
+function filterNomineeNominationsCountByValue(data) {
+    const input = getInputValue("non");
+    if (input == "") {
+        return data;
+    } else {
+        let filterData = data.filter((x) => {
+            return x.value == parseInt(input);
+        });
+        return filterData;
+    }
 }
 
 // Group D
