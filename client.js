@@ -149,7 +149,7 @@ function filterNomineeNominationsCountByValue(data) {
 
 // Group D
 async function fetchOscarsData() {
-    const response = await fetch("oscars.json");
+    const response = await fetch('http://localhost:8080/data');
     const data = await response.json();
     return data;
 }
