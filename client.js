@@ -15,8 +15,7 @@ function main() {
 async function getNominations() {
     // Fetch nominations from server and display in output area
     clearOutput();
-    const data = await fetchOscarsData();
-    const filteredData = filterByInputs(data);
+    const filteredData = await filterByInputs();
     displayingNominationsResults(filteredData);
 }
 
@@ -55,9 +54,11 @@ async function filterByInputs() {
     const nominee = getInputValue("nominee");
     const category = getInputValue("category");
     const info = getInputValue("info");
-    const queryParameters = `year=${year}&nominee=${nominee}&category=${category}&info=${info}`;
+    const won = getInputValue("won");
+    const queryParameters = `year=${year}&nominee=${nominee}&category=${category}&info=${info}&won=${won}`;
     const response = await fetch(`http://localhost:8080/getNominations?${queryParameters}`);
-    return response;
+    const data = await response.json();
+    return data;
 }
 
 // Group C
