@@ -15,7 +15,7 @@ function main() {
 async function getNominations() {
     // Fetch nominations from server and display in output area
     clearOutput();
-    const filteredData = await filterByInputs();
+    const filteredData = await filterNominationsByInputs();
     displayingNominationsResults(filteredData);
 }
 
@@ -49,7 +49,7 @@ function addNominationsTable(data) {
     outputDiv.appendChild(nomineeDiv);
 }
 
-async function filterByInputs() {
+async function filterNominationsByInputs() {
     const year = getInputValue("year");
     const nominee = getInputValue("nominee");
     const category = getInputValue("category");
@@ -65,11 +65,11 @@ async function filterByInputs() {
 async function getNominees() {
     // Fetch nominees from server and display in output area
     clearOutput();
-    let result = await filterNomineesByInput();
+    let result = await filterNomineesByInputs();
     displayingNomineesResults(result);
 }
 
-async function filterNomineesByInput() {
+async function filterNomineesByInputs() {
     const non = getInputValue("non");
     const won = getInputValue("won");
     const queryParameters = `non=${non}&won=${won}`;
