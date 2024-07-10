@@ -65,9 +65,17 @@ async function filterByInputs() {
 async function getNominees() {
     // Fetch nominees from server and display in output area
     clearOutput();
-    const data = await fetchOscarsData();
-    let result = countNominationsForNominees(data);
+    let result = await filterNomineesByInput();
     displayingNomineesResults(result);
+}
+
+async function filterNomineesByInput() {
+    const non = getInputValue("non");
+    const won = getInputValue("won");
+    const queryParameters = `non=${non}&won=${won}`;
+    const response = await fetch(`http://localhost:8080/getNominees?${queryParameters}`);
+    const data = await response.json();
+    return data;
 }
 
 function displayingNomineesResults(result) {
@@ -96,48 +104,6 @@ function addNomineeTable(result) {
 
     const outputDiv = document.getElementById("output");
     outputDiv.appendChild(nomineeDiv);
-}
-
-function countNominationsForNominees(data) {
-    const filterByWon = filterByWonInput(data);
-    let filteredData = filterByWon.filter((nomination) => {
-        if (
-            nomination.Category.includes("Actress") ||
-            nomination.Category.includes("Actor")
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    });
-
-    let nomineeCount = {};
-    for (let nominee of filteredData) {
-        if (nominee.Nominee in nomineeCount) {
-            nomineeCount[nominee.Nominee] += 1;
-        } else {
-            nomineeCount[nominee.Nominee] = 1;
-        }
-    }
-    const keyValuePairs = Object.entries(nomineeCount)
-        .map(([key, value]) => ({ key, value }))
-        .sort((a, b) => b.value - a.value);
-
-    const filterByNominationsCountInput = filterNomineeNominationsCountByValue(keyValuePairs);
-
-    return filterByNominationsCountInput;
-}
-
-function filterNomineeNominationsCountByValue(data) {
-    const input = getInputValue("non");
-    if (input == "") {
-        return data;
-    } else {
-        let filterData = data.filter((x) => {
-            return x.value == parseInt(input);
-        });
-        return filterData;
-    }
 }
 
 // Group D

@@ -70,6 +70,57 @@ async function filterByInputs(query) {
     return filteredData;
 }
 
+app.get('/getNominees', async (req, res) => {
+    const filteredData = await filteredNomineesInput(req.query);
+    res.send(filteredData);
+});
+
+async function filteredNomineesInput(query) {
+    const data = await readOscarsJson();
+    const { non, won } = query;
+
+    const filterByWon = filterByWonInput(data, won);
+
+    let filteredData = filterByWon.filter((nomination) => {
+        if (
+            nomination.Category.includes("Actress") ||
+            nomination.Category.includes("Actor")
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    let nomineeCount = {};
+    for (let nominee of filteredData) {
+        if (nominee.Nominee in nomineeCount) {
+            nomineeCount[nominee.Nominee] += 1;
+        } else {
+            nomineeCount[nominee.Nominee] = 1;
+        }
+    }
+
+    const keyValuePairs = Object.entries(nomineeCount)
+        .map(([key, value]) => ({ key, value }))
+        .sort((a, b) => b.value - a.value);
+
+    const filterByNominationsCountInput = filterNomineeNominationsCountByValue(keyValuePairs, non);
+
+    return filterByNominationsCountInput;
+}
+
+function filterNomineeNominationsCountByValue(data, input) {
+    if (input == "") {
+        return data;
+    } else {
+        let filterData = data.filter((x) => {
+            return x.value == parseInt(input);
+        });
+        return filterData;
+    }
+}
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
 });
