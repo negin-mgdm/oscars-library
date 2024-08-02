@@ -1,0 +1,45 @@
+# Ignore operating system files
+.DS_Store
+Thumbs.db
+
+# Ignore node.js dependencies
+node_modules/
+
+# Ignore build outputs
+dist/
+build/
+
+# Ignore log files
+*.log
+
+# Ignore IDE/editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Ignore compiled Java files
+*.class
+
+# Ignore Ruby gems
+*.gem
+vendor/
+
+# Ignore Rust build files
+target/
+
+# Ignore Go vendor directory
+vendor/
+
+# Ignore C/C++ build files
+*.out
+*.o
+*.obj
+*.exe
+
+# Ignore personal config files
+*.env
