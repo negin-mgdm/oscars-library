@@ -39,10 +39,7 @@ async function readOscarsJson() {
 
 function filterByWonInput(data, won) {
     if (won == "yes" || won == "no") {
-        let filteredNominations = data.filter((nomination) => {
-            return nomination.Won.includes(won);
-        })
-        return filteredNominations;
+        return data.filter((nomination) => nomination.Won.toLowerCase() === won);
     } else {
         return data;
     }
@@ -51,23 +48,17 @@ function filterByWonInput(data, won) {
 async function filterByInputs(query) {
     const data = await readOscarsJson();
 
-    const { year, nominee, category, info, won } = query;
+    const { year = "", category = "", info = "", won = "" } = query;
     const filterDataByWon = filterByWonInput(data, won);
 
-    let filteredData = filterDataByWon.filter((nomination) => {
+    return filterDataByWon.filter((nomination) => {
         const infoData = typeof nomination.Info === 'string' ? nomination.Info.toLowerCase() : '';
-        if (
-            nomination.Year.toLowerCase().includes(year) &&
-            nomination.Nominee.toLowerCase().includes(nominee) &&
-            nomination.Category.toLowerCase().includes(category) &&
-            infoData.includes(info)
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        return (
+            nomination.Year.toLowerCase().includes(year.toLowerCase()) &&
+            nomination.Category.toLowerCase().includes(category.toLowerCase()) &&
+            infoData.includes(info.toLowerCase())
+        );
     });
-    return filteredData;
 }
 
 app.get('/getNominees', async (req, res) => {
@@ -77,48 +68,27 @@ app.get('/getNominees', async (req, res) => {
 
 async function filteredNomineesInput(query) {
     const data = await readOscarsJson();
-    const { non, won } = query;
+    const { nominee = "", won = "" } = query;
 
     const filterByWon = filterByWonInput(data, won);
 
     let filteredData = filterByWon.filter((nomination) => {
-        if (
-            nomination.Category.includes("Actress") ||
-            nomination.Category.includes("Actor")
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        return (
+            nomination.Category.toLowerCase().includes("actress") ||
+            nomination.Category.toLowerCase().includes("actor")
+        );
     });
 
     let nomineeCount = {};
-    for (let nominee of filteredData) {
-        if (nominee.Nominee in nomineeCount) {
-            nomineeCount[nominee.Nominee] += 1;
-        } else {
-            nomineeCount[nominee.Nominee] = 1;
-        }
-    }
+    filteredData.forEach(nominee => {
+        nomineeCount[nominee.Nominee] = (nomineeCount[nominee.Nominee] || 0) + 1;
+    });
 
     const keyValuePairs = Object.entries(nomineeCount)
         .map(([key, value]) => ({ key, value }))
         .sort((a, b) => b.value - a.value);
 
-    const filterByNominationsCountInput = filterNomineeNominationsCountByValue(keyValuePairs, non);
-
-    return filterByNominationsCountInput;
-}
-
-function filterNomineeNominationsCountByValue(data, input) {
-    if (input == "") {
-        return data;
-    } else {
-        let filterData = data.filter((x) => {
-            return x.value == parseInt(input);
-        });
-        return filterData;
-    }
+    return keyValuePairs;
 }
 
 app.listen(port, () => {

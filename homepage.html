@@ -14,82 +14,160 @@
     <div class="container">
       <h1 class="mt-5">Oscar Nomination Form</h1>
 
-      <form id="oscar-form" class="mt-4">
-        <div class="form-group">
-          <label for="year">Year:</label>
-          <input type="text" id="year" name="year" class="form-control" />
-        </div>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="nominations-tab"
+            data-toggle="tab"
+            href="#nominations"
+            role="tab"
+            aria-controls="nominations"
+            aria-selected="true"
+            >Nominations</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="nominees-tab"
+            data-toggle="tab"
+            href="#nominees"
+            role="tab"
+            aria-controls="nominees"
+            aria-selected="false"
+            >Nominees</a
+          >
+        </li>
+      </ul>
 
-        <div class="form-group">
-          <label for="category">Category:</label>
-          <input
-            type="text"
-            id="category"
-            name="category"
-            class="form-control"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="nominee">Nominee:</label>
-          <input type="text" id="nominee" name="nominee" class="form-control" />
-        </div>
-
-        <div class="form-group">
-          <label for="info">Info:</label>
-          <input type="text" id="info" name="info" class="form-control" />
-        </div>
-
-        <div class="form-group">
-          <label for="non">Number of Nominations:</label>
-          <input type="text" id="non" name="non" class="form-control" />
-        </div>
-
-        <div class="form-group">
-          <label for="won">Won:</label>
-          <select id="won" class="form-control">
-            <option value="both">Both</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-        </div>
-
-        <button
-          type="button"
-          id="getNominations"
-          class="btn btn-outline-primary mr-2"
+      <!-- Tab panes -->
+      <div class="tab-content mt-4">
+        <div
+          class="tab-pane fade show active"
+          id="nominations"
+          role="tabpanel"
+          aria-labelledby="nominations-tab"
         >
-          Get Nominations
-        </button>
-        <button
-          type="button"
-          id="getNominees"
-          class="btn btn-outline-info mr-2"
+          <form id="nominations-form" class="mt-4">
+            <div class="form-group">
+              <label for="nominations-year">Year:</label>
+              <input
+                type="text"
+                id="nominations-year"
+                name="year"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="nominations-category">Category:</label>
+              <input
+                type="text"
+                id="nominations-category"
+                name="category"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="nominations-info">Info:</label>
+              <input
+                type="text"
+                id="nominations-info"
+                name="info"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="nominations-won">Won:</label>
+              <select id="nominations-won" class="form-control">
+                <option value="both">Both</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <button
+                type="button"
+                id="getNominations"
+                class="btn btn-outline-primary mr-2"
+              >
+                Get Nominations
+              </button>
+              <button
+                type="button"
+                id="clearNominationsInput"
+                class="btn btn-outline-danger mr-2"
+              >
+                Clear Input
+              </button>
+              <button
+                type="button"
+                id="clearNominationsOutput"
+                class="btn btn-outline-danger"
+              >
+                Clear Output
+              </button>
+            </div>
+          </form>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="nominees"
+          role="tabpanel"
+          aria-labelledby="nominees-tab"
         >
-          Get Nominees
-        </button>
-        <button
-          type="button"
-          onclick="clearInput()"
-          class="btn btn-outline-danger mr-2"
-        >
-          Clear Input
-        </button>
-        <button
-          type="button"
-          onclick="clearOutput()"
-          class="btn btn-outline-danger"
-        >
-          Clear Output
-        </button>
-      </form>
+          <form id="nominees-form" class="mt-4">
+            <div class="form-group">
+              <label for="nominees-nominee">Nominee:</label>
+              <input
+                type="text"
+                id="nominees-nominee"
+                name="nominee"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="nominees-won">Won:</label>
+              <select id="nominees-won" class="form-control">
+                <option value="both">Both</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <button
+                type="button"
+                id="getNominees"
+                class="btn btn-outline-info mr-2"
+              >
+                Get Nominees
+              </button>
+              <button
+                type="button"
+                id="clearNomineesInput"
+                class="btn btn-outline-danger mr-2"
+              >
+                Clear Input
+              </button>
+              <button
+                type="button"
+                id="clearNomineesOutput"
+                class="btn btn-outline-danger"
+              >
+                Clear Output
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
 
       <div id="output" class="mt-4"></div>
     </div>
 
-    <script src="client.js"></script>
-
-    <!-- Bootstrap JS (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="client.js"></script>
   </body>
 </html>
