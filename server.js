@@ -74,8 +74,9 @@ async function filteredNomineesInput(query) {
 
     let filteredData = filterByWon.filter((nomination) => {
         return (
-            nomination.Category.toLowerCase().includes("actress") ||
-            nomination.Category.toLowerCase().includes("actor")
+            (nomination.Category.toLowerCase().includes("actress") ||
+                nomination.Category.toLowerCase().includes("actor")) &&
+            nomination.Nominee.toLowerCase().includes(nominee.toLowerCase())
         );
     });
 
