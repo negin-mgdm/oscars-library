@@ -31,7 +31,12 @@ oscars-library/
 └── server.js          # Server-side JavaScript code
 ```
 ## Technologies Used
-
+- HTML/CSS: Utilised for structuring and styling the frontend user interface.
+- JavaScript (Client-side): Manages user interactions and dynamic content on the frontend.
+- Node.js: Used as the runtime environment for executing the server-side JavaScript code.
+- Express.js: The web application framework used for Node.js, used to build the backend API and serve the web pages.
+- JSON: Used for data storage and handling within the application.
+- Heroku: The app is configured for deployment on Heroku, as configured by the a Procfile.
 
 ## Contributing
 
