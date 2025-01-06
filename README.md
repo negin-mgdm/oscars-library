@@ -46,11 +46,7 @@ Contributions to the Oscars Library project are welcome! If you have suggestions
 - Create a new branch for your changes.
 - Commit your changes and push to your forked repository.
 - Submit a pull request to the main repository.
-
-## Licence
-
-## Acknowledgements
-
+- 
 ## Contact
 
 For any questions or issues, please contact [me](https://github.com/negin-mgdm).
